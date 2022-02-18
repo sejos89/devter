@@ -1,10 +1,25 @@
 import Head from 'next/head';
-import AppLayout from '../components/AppLayout';
-import Button from '../components/Button';
-import Github from '../components/Icons/Github';
-import { colors } from '../styles/theme';
+import { useEffect } from 'react';
+import AppLayout from '@c/AppLayout';
+import Button from '@c/Button';
+import Github from '@c/Icons/Github';
+import { loginWithGitHub } from 'firebase/client';
+import { colors } from 'styles/theme';
+import Logo from '@c/Icons/Logo';
+import { useRouter } from 'next/router';
+import useUser, { USER_STATES } from 'hooks/useUser';
 
 export default function Home() {
+  const user = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    user && router.replace('/home');
+  }, [user]);
+
+  const handleClick = () => {
+    loginWithGitHub().catch((error) => console.log(error));
+  };
   return (
     <>
       <Head>
@@ -14,17 +29,20 @@ export default function Home() {
 
       <AppLayout>
         <section>
-          <img src="/devter-logo.png" />
+          <Logo width="100" />
           <h1>Devter</h1>
           <h2>
             Talk about development
             <br /> with developers
           </h2>
           <div>
-            <Button>
-              <Github fill={colors.white} width={24} height={24} />
-              Login with GitHub
-            </Button>
+            {user === USER_STATES.NOT_LOGGED && (
+              <Button onClick={handleClick}>
+                <Github fill={colors.white} width={24} height={24} />
+                Login with GitHub
+              </Button>
+            )}
+            {user === USER_STATES.NOT_KNOWN && <img src="/spinner.gif" />}
           </div>
         </section>
       </AppLayout>
@@ -44,6 +62,7 @@ export default function Home() {
         }
         h1 {
           color: ${colors.primary};
+          font-size: 32px;
           font-weight: 800;
           margin-bottom: 16px;
         }
