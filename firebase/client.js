@@ -8,12 +8,7 @@ import {
   orderBy,
   query,
 } from 'firebase/firestore';
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from 'firebase/storage';
+import { getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import {
   getAuth,
   GithubAuthProvider,
@@ -33,7 +28,6 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 const db = getFirestore();
-
 const mapUserFromFirebaseAuthToUser = (user) => {
   const { displayName, email, photoURL, uid } = user;
   return {
@@ -45,6 +39,7 @@ const mapUserFromFirebaseAuthToUser = (user) => {
 };
 
 export const onAuthStateChangedFunc = (onChange) => {
+  console.log('siempre me ejecutooo');
   const auth = getAuth();
 
   return onAuthStateChanged(auth, (user) => {

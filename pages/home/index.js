@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import Link from 'next/link';
 import Head from 'next/head';
-import AppLayout from '@c/AppLayout';
 import Devit from '@c/Devit';
 import Create from '@c/Icons/Create';
 import { fetchLatestDevits } from 'firebase/client';
@@ -20,47 +19,45 @@ export default function HomePage() {
   }, [user]);
   return (
     <>
-      <AppLayout>
-        <Head>
-          <title>Inicio / Devter</title>
-        </Head>
-        <header>
-          <h2>Inicio</h2>
-        </header>
-        <section>
-          {timeline.map(
-            ({ avatar, content, createdAt, id, img, userId, userName }) => (
-              <Devit
-                avatar={avatar}
-                content={content}
-                createdAt={createdAt}
-                id={id}
-                img={img}
-                key={id}
-                userId={userId}
-                userName={userName}
-              />
-            )
-          )}
-        </section>
-        <nav>
-          <Link href="/home">
-            <a>
-              <Home width={32} height={32} stroke="#09f" />
-            </a>
-          </Link>
-          <Link href="/compose/tweet">
-            <a>
-              <Search width={32} height={32} stroke="#09f" />
-            </a>
-          </Link>
-          <Link href="/compose/tweet">
-            <a>
-              <Create width={32} height={32} stroke="#09f" />
-            </a>
-          </Link>
-        </nav>
-      </AppLayout>
+      <Head>
+        <title>Inicio / Devter</title>
+      </Head>
+      <header>
+        <h2>Inicio</h2>
+      </header>
+      <section>
+        {timeline.map(
+          ({ avatar, content, createdAt, id, img, userId, userName }) => (
+            <Devit
+              avatar={avatar}
+              content={content}
+              createdAt={createdAt}
+              id={id}
+              img={img}
+              key={id}
+              userId={userId}
+              userName={userName}
+            />
+          )
+        )}
+      </section>
+      <nav>
+        <Link href="/home">
+          <a>
+            <Home width={32} height={32} stroke="#09f" />
+          </a>
+        </Link>
+        <Link href="/compose/tweet">
+          <a>
+            <Search width={32} height={32} stroke="#09f" />
+          </a>
+        </Link>
+        <Link href="/compose/tweet">
+          <a>
+            <Create width={32} height={32} stroke="#09f" />
+          </a>
+        </Link>
+      </nav>
 
       <style jsx>
         {`

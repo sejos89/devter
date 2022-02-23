@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import AppLayout from '@c/AppLayout';
 import Button from '@c/Button';
 import useUser from 'hooks/useUser';
 import { getDownloadURL } from 'firebase/storage';
@@ -90,37 +89,35 @@ export default function ComposeTweet() {
   const isButtonDisabled = !message.length || status === COMPOSE_STATES.LOADING;
   return (
     <>
-      <AppLayout>
-        <Head>
-          <title>Crear un Devit / Devter</title>
-        </Head>
-        <section className="form-container">
-          {user && (
-            <section className="avatar-container">
-              <Avatar src={user.avatar} />
+      <Head>
+        <title>Crear un Devit / Devter</title>
+      </Head>
+      <section className="form-container">
+        {user && (
+          <section className="avatar-container">
+            <Avatar src={user.avatar} />
+          </section>
+        )}
+        <form onSubmit={handleSubmit}>
+          <textarea
+            onChange={handleChange}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            placeholder="¿Qué está pasando?"
+            value={message}
+          ></textarea>
+          {imgURL && (
+            <section className="remove-img">
+              <button onClick={() => setImgURL(null)}>x</button>
+              <img src={imgURL} />
             </section>
           )}
-          <form onSubmit={handleSubmit}>
-            <textarea
-              onChange={handleChange}
-              onDragEnter={handleDragEnter}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-              placeholder="¿Qué está pasando?"
-              value={message}
-            ></textarea>
-            {imgURL && (
-              <section className="remove-img">
-                <button onClick={() => setImgURL(null)}>x</button>
-                <img src={imgURL} />
-              </section>
-            )}
-            <div>
-              <Button disabled={isButtonDisabled}>Devitear</Button>
-            </div>
-          </form>
-        </section>
-      </AppLayout>
+          <div>
+            <Button disabled={isButtonDisabled}>Devitear</Button>
+          </div>
+        </form>
+      </section>
 
       <style jsx>{`
         div {
